@@ -1,6 +1,7 @@
 package com.example.viewpager2
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -17,8 +18,8 @@ class IntroActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_intro)
-        binding.btnIntroBack.setOnClickListener { finish() }
         initViewPager()
+        setBackBtnClick()
     }
 
     private fun initViewPager() {
@@ -29,16 +30,31 @@ class IntroActivity : AppCompatActivity() {
             override fun onPageSelected(position: Int) {
                 when (position) {
                     0 -> {
-                        setBackgroundColor(getColorFromResource(R.color.ounceintro_one))
+                        setBackgroundColor(getColorFromResource(R.color.mainbackground_one))
                         binding.btnIntroLeft.visibility = View.GONE
                     }
                     1 -> {
-                        setBackgroundColor(getColorFromResource(R.color.ounceintro_two))
+                        setBackgroundColor(getColorFromResource(R.color.mainbackground_two))
+                        binding.btnIntroLeft.visibility = View.VISIBLE
+                        binding.btnIntroRight.visibility = View.VISIBLE
+                    }
+                    2 -> {
+                        setBackgroundColor(getColorFromResource(R.color.mainbackground_three))
+                        binding.btnIntroLeft.visibility = View.VISIBLE
+                        binding.btnIntroRight.visibility = View.VISIBLE
+                    }
+                    3 -> {
+                        setBackgroundColor(getColorFromResource(R.color.mainbackground_four))
+                        binding.btnIntroLeft.visibility = View.VISIBLE
+                        binding.btnIntroRight.visibility = View.VISIBLE
+                    }
+                    4 -> {
+                        setBackgroundColor(getColorFromResource(R.color.mainbackground_five))
                         binding.btnIntroLeft.visibility = View.VISIBLE
                         binding.btnIntroRight.visibility = View.VISIBLE
                     }
                     else -> {
-                        setBackgroundColor(getColorFromResource(R.color.ounceintro_three))
+                        setBackgroundColor(getColorFromResource(R.color.mainbackground_six))
                         binding.btnIntroRight.visibility = View.GONE
                     }
                 }
@@ -59,9 +75,12 @@ class IntroActivity : AppCompatActivity() {
 
         override fun createFragment(position: Int): Fragment {
             return when (position) {
-                0 -> IntroFragment(R.drawable.who_made_ounce_img_1)
-                1 -> IntroFragment(R.drawable.who_made_ounce_img_2)
-                else -> IntroFragment(R.drawable.who_made_ounce_img_3)
+                0 -> IntroFragment(R.drawable.ic_home_img_step0)
+                1 -> IntroFragment(R.drawable.ic_home_img_step1)
+                2 -> IntroFragment(R.drawable.ic_home_img_step2)
+                3 -> IntroFragment(R.drawable.ic_home_img_step3)
+                4 -> IntroFragment(R.drawable.ic_home_img_step4)
+                else -> IntroFragment(R.drawable.ic_home_img_nothing)
 
             }
         }
@@ -75,8 +94,14 @@ class IntroActivity : AppCompatActivity() {
         binding.ounceintroBackground.setBackgroundColor(color)
         StatusBarUtil.setStatusBar(this, color)
     }
+    fun setBackBtnClick(){
+        binding.btnIntroBack.setOnClickListener {
+            val intent = Intent(this@IntroActivity, MainActivity::class.java)
+            startActivity(intent)
+            finish() }
+    }
 
     companion object {
-        private const val NUM_PAGES = 5
+        private const val NUM_PAGES = 6
     }
 }
